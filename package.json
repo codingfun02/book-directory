@@ -1,0 +1,30 @@
+{
+  "name": "book-directory",
+  "version": "1.0.0",
+  "description": "You can save books' data that you read.",
+  "main": "index.js",
+  "scripts": {
+    "dev:server": "nodemon --exec babel-node src/server.js --delay 2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codingfun02/book-directory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codingfun02/book-directory/issues"
+  },
+  "homepage": "https://github.com/codingfun02/book-directory#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.1",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.2"
+  }
+}

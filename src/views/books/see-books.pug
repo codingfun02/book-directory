@@ -1,0 +1,8 @@
+extends ../layout/layout.pug
+
+block content
+  ul
+    each book in books
+      li
+        a(href=`/books/${book._id}`)
+          | #{book.title}

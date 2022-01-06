@@ -4,7 +4,7 @@
   "description": "You can save books' data that you read.",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon --exec babel-node src/server.js --delay 2"
+    "dev:server": "nodemon --exec babel-node src/init.js"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,12 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.2",
     "mongoose": "^6.1.1",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"

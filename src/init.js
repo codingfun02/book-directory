@@ -1,12 +1,11 @@
-import express from "express";
+import "./env.js";
+import "./db.js";
+import app from "./server";
 
 const PORT = process.env.PORT;
-const app = express();
 
 const handleServerListening = () => {
   console.log(`✅ Server Listening at port ${PORT}`);
 };
 
 app.listen(PORT, handleServerListening);
-
-export default app;

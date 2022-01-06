@@ -1,0 +1,16 @@
+extends ../layout/layout.pug
+
+block content
+  h1 Book Info
+  div=`Title: ${book.title}`
+  div=`Description: ${book.description}`
+  div=`Author: ${book.author}`
+  div Genres:
+  ul
+    each genre in book.genres
+      li=genre
+  div
+    div
+      a(href=`/books/${book._id}/edit`) Edit
+    div
+      a(href=`/books/${book._id}/delete`) Delete

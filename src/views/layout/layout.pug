@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    if title
+      title #{title} | Book Directory
+    else
+      title #{pageTitle} | Book Directory
+  body
+    header
+      include ../partials/header.pug
+    main
+      block content
+    footer
+      include ../partials/footer.pug

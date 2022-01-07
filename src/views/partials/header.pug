@@ -1,12 +1,18 @@
 if messages.error
-  span=messages.error
+  div.message.message__error
+    | #{messages.error}
+    div.message__icon
+      i.fas.fa-exclamation-triangle
 else if messages.success
-  span=messages.success  
+  div.message.message__success
+    | #{messages.success}
+    div.message__icon
+      i.fas.fa-exclamation-circle
 nav
-  a(href="/")
-    | Book Directory
-  ul
-    li
-      a(href="/books/add")
-        | Add Book
-h1=pageTitle
+  a.nav__anchor(href="/")
+    i(class="fas fa-book")
+    h1.nav__title Book Directory
+  div.nav__line
+  a.nav__anchor(href="/books/add")
+    i(class="fas fa-plus-square")
+h1.header__title=pageTitle

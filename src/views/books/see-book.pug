@@ -1,16 +1,27 @@
 extends ../layout/layout.pug
 
 block content
-  h1 Book Info
-  div=`Title: ${book.title}`
-  div=`Description: ${book.description}`
-  div=`Author: ${book.author}`
-  div Genres:
-  ul
-    each genre in book.genres
-      li=genre
-  div
-    div
-      a(href=`/books/${book._id}/edit`) Edit
-    div
-      a(href=`/books/${book._id}/delete`) Delete
+  table.book__info
+    tr
+      td Title
+      td=book.title
+    tr
+      td Description
+      td=book.description
+    tr
+      td Author
+      td=book.author
+    tr
+      td Genres
+      td
+        ul
+          each genre in book.genres
+            li=genre
+  div.book__btns
+    a.book__btns-anchor(href=`/books/${book._id}/edit`)
+      i.fas.fa-edit
+      | Edit
+    div.book__btns-line
+    a.book__btns-anchor(href=`/books/${book._id}/delete`)
+      i.fas.fa-trash-alt
+      | Delete

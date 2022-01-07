@@ -21,6 +21,7 @@ app.use(
   })
 );
 app.use(flash());
+app.use("/static", express.static(__dirname + "/public"));
 app.use("/", rootRouter);
 app.use("/books", bookRouter);
 app.use((req, res, next) => {

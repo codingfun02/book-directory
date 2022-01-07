@@ -1,8 +1,10 @@
 extends ../layout/layout.pug
 
 block content
-  ul
+  ul.main__book-list
     each book in books
       li
         a(href=`/books/${book._id}`)
           | #{book.title}
+    else
+      li Can't find any books

@@ -3,7 +3,7 @@ extends ../layout/layout.pug
 block content
   form(method="POST")
     input(type="text", value=book.title, placeholder="Title", name="title", required)
-    input(type="text", value=book.description, placeholder="Description", name="description", required)
+    textarea(placeholder="Description", name="description", required)=book.description
     input(type="text", value=book.author, placeholder="Author", name="author", required)
     input(type="text", value=book.genres.join(","), placeholder="Genres(separated with comma)", name="genres", required)
     input(type="submit", value="Edit")

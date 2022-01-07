@@ -5,6 +5,7 @@ import MongoStore from "connect-mongo";
 import flash from "express-flash";
 import rootRouter from "./routers/rootRouter.js";
 import bookRouter from "./routers/bookRouter.js";
+import Book from "./models/Book.js";
 
 const app = express();
 

@@ -19,7 +19,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+a:hover:not(.nav__anchor) {
   text-decoration: underline;
 }
 
@@ -38,6 +38,10 @@ a:hover {
 
 .message__success {
   background-color: #2ecc71;
+}
+
+.message__info {
+  background-color: #95a5a6;
 }
 
 .message__icon {
@@ -67,11 +71,15 @@ nav {
   color: white;
 }
 
+nav ul {
+  display: flex;
+  align-items: center;
+}
+
 .nav__anchor:first-of-type {
   display: flex;
   align-items: center;
   gap: 0 6px;
-  text-decoration: none;
 }
 
 .nav__title {

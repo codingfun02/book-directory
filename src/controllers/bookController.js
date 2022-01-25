@@ -25,19 +25,22 @@ export const getAddBook = (req, res) => {
 
 export const postAddBook = async (req, res) => {
   const { title, description, author, genres } = req.body;
+  let book;
   try {
-    await Book.create({
+    book = await Book.create({
       title,
       description,
       author,
       genres: genres.split(","),
     });
   } catch (error) {
-    req.flash("error", "Error occured while adding: " + error._message);
+    req
+      .status(400)
+      .flash("error", "Error occured while adding: " + error._message);
     return res.redirect("/");
   }
   req.flash("success", "Successfully Added");
-  return res.redirect("/");
+  return res.redirect(`/books/${book._id}`);
 };
 
 export const getEditBook = async (req, res) => {
@@ -65,8 +68,10 @@ export const postEditBook = async (req, res) => {
     });
     await book.validate();
   } catch (error) {
-    req.flash("error", "Error occured while editing" + error._message);
-    return res.redirect("/");
+    req
+      .status(400)
+      .flash("error", "Error occured while editing" + error._message);
+    return res.redirect(`/books/${id}`);
   }
   req.flash("success", "Successfully Edited");
   return res.redirect(`/books/${id}`);
@@ -74,7 +79,12 @@ export const postEditBook = async (req, res) => {
 
 export const deleteBook = async (req, res) => {
   const { id } = req.params;
-  await Book.findByIdAndDelete(id);
+  try {
+    await Book.findByIdAndDelete(id);
+  } catch (error) {
+    req.flash("error", "Error occured while deleting" + error._message);
+    return res.redirect("/");
+  }
   req.flash("success", "Successfully Deleted");
   return res.redirect("/");
 };

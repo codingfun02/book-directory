@@ -8,11 +8,29 @@ else if messages.success
     | #{messages.success}
     div.message__icon
       i.fas.fa-exclamation-circle
+else if messages.info
+  div.message.message__success
+    | #{messages.info}
+    div.message__icon
+      i.fas.fa-exclamation-circle
 nav
-  a.nav__anchor(href="/")
-    i(class="fas fa-book")
-    h1.nav__title Book Directory
-  div.nav__line
-  a.nav__anchor(href="/books/add")
-    i(class="fas fa-plus-square")
+  ul
+    li
+      li
+        a.nav__anchor(href="/")
+          i(class="fas fa-book")
+          h1.nav__title Book Directory
+      div.nav__line
+      li
+        a.nav__anchor(href="/books/add")
+          i(class="fas fa-plus-square")
+      div.nav__line
+      if loggedIn
+        li
+          a.nav__anchor(href="/logout") Log out
+      else
+        li
+          a.nav__anchor(href="/join") Join
+        li
+          a.nav__anchor(href="/login") Login
 h1.header__title=pageTitle

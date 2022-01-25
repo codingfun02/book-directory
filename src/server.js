@@ -5,7 +5,7 @@ import MongoStore from "connect-mongo";
 import flash from "express-flash";
 import rootRouter from "./routers/rootRouter.js";
 import bookRouter from "./routers/bookRouter.js";
-import Book from "./models/Book.js";
+import { localsMiddleware } from "./middlewares.js";
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use(
   })
 );
 app.use(flash());
+app.use(localsMiddleware);
 app.use("/static", express.static(__dirname + "/public"));
 app.use("/", rootRouter);
 app.use("/books", bookRouter);

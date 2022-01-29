@@ -27,10 +27,10 @@ nav
       div.nav__line
       if loggedIn
         li
-          a.nav__anchor(href="/logout") Log out
+          a.nav__anchor.nav__user-btn(href="/logout") Log out
       else
         li
-          a.nav__anchor(href="/join") Join
+          a.nav__anchor.nav__user-btn(href="/join") Join
         li
-          a.nav__anchor(href="/login") Login
+          a.nav__anchor.nav__user-btn(href="/login") Login
 h1.header__title=pageTitle

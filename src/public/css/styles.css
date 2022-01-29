@@ -82,6 +82,12 @@ nav ul {
   gap: 0 6px;
 }
 
+.nav__user-btn {
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-right: 20px;
+}
+
 .nav__title {
   color: inherit;
   font-size: 35px;
@@ -218,6 +224,7 @@ form textarea {
 
 form input[type="submit"] {
   margin-top: 7px;
+  margin-bottom: 30px;
   border: none;
   cursor: pointer;
 }

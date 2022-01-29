@@ -8,7 +8,7 @@ export const protectorMiddleware = (req, res, next) => {
   if (req.session.loggedIn) {
     return next();
   } else {
-    req.flash("info", "Please LOGIN to visit that page");
+    req.flash("error", "Please LOGIN to visit that page");
     return res.redirect("/login");
   }
 };
@@ -17,7 +17,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
     return next();
   } else {
-    req.flash("info", "Please LOG OUT to visit that page");
+    req.flash("error", "Please LOG OUT to visit that page");
     return res.redirect("/");
   }
 };

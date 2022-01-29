@@ -7,6 +7,10 @@ import {
   postLogin,
   logout,
 } from "../controllers/userController";
+import {
+  getAddBook,
+  postAddBook
+} from "../controllers/bookController";
 import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares.js";
 
 const rootRouter = express.Router();
@@ -19,5 +23,6 @@ rootRouter
   .get(getLogin)
   .post(postLogin);
 rootRouter.get("/logout", protectorMiddleware, logout);
+rootRouter.route("/add").all(protectorMiddleware).get(getAddBook).post(postAddBook);
 
 export default rootRouter;

@@ -17,11 +17,12 @@ block content
         ul
           each genre in book.genres
             li=genre
-  div.book__btns
-    a.book__btns-anchor(href=`/books/${book._id}/edit`)
-      i.fas.fa-edit
-      | Edit
-    div.book__btns-line
-    a.book__btns-anchor(href=`/books/${book._id}/delete`)
-      i.fas.fa-trash-alt
-      | Delete
+  if String(book.owner._id) === String(loggedInUser._id)
+    div.book__btns
+      a.book__btns-anchor(href=`/books/${book._id}/edit`)
+        i.fas.fa-edit
+        | Edit
+      div.book__btns-line
+      a.book__btns-anchor(href=`/books/${book._id}/delete`)
+        i.fas.fa-trash-alt
+        | Delete

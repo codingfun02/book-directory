@@ -1,7 +1,7 @@
 import Book from "../models/Book.js";
 
 export const seeBooks = async (req, res) => {
-  const books = await Book.find({});
+  const books = await Book.find({}).populate("owner");
   books.reverse();
   return res.render("books/see-books.pug", {
     pageTitle: "See Books",
@@ -12,7 +12,7 @@ export const seeBooks = async (req, res) => {
 
 export const seeBook = async (req, res) => {
   const { id } = req.params;
-  const book = await Book.findById(id);
+  const book = await Book.findById(id).populate("owner");
   if (!book) {
     return res.status(404).render("404", { pageTitle: "Page Not Found 404" });
   }
@@ -20,11 +20,13 @@ export const seeBook = async (req, res) => {
 };
 
 export const getAddBook = (req, res) => {
+  const { loggedIn } = req.session;
   return res.render("books/add.pug", { pageTitle: "Add a Book" });
 };
 
 export const postAddBook = async (req, res) => {
   const { title, description, author, genres } = req.body;
+  const { loggedInUser } = req.session;
   let book;
   try {
     book = await Book.create({
@@ -32,6 +34,7 @@ export const postAddBook = async (req, res) => {
       description,
       author,
       genres: genres.split(","),
+      owner: loggedInUser._id
     });
   } catch (error) {
     req
@@ -45,7 +48,12 @@ export const postAddBook = async (req, res) => {
 
 export const getEditBook = async (req, res) => {
   const { id } = req.params;
-  const book = await Book.findById(id);
+  const book = await Book.findById(id).populate("owner");
+  const { loggedInUser } = req.session;
+  if (book.owner._id !== loggedInUser._id) {
+    req.flash("error", "You can't edit this book!");
+    return res.redirect(`/books/${id}`);
+  }
   if (!book) {
     req.flash("error", "Can't find this book!");
     return res.redirect("/");
@@ -59,6 +67,12 @@ export const getEditBook = async (req, res) => {
 export const postEditBook = async (req, res) => {
   const { id } = req.params;
   const { title, description, author, genres } = req.body;
+  const book = await Book.findById(id).populate("owner");
+  const { loggedInUser } = req.session;
+  if (book.owner._id !== loggedInUser._id) {
+    req.flash("error", "You can't edit this book!");
+    return res.redirect(`/books/${id}`);
+  }
   try {
     const book = await Book.findByIdAndUpdate(id, {
       title,
@@ -79,6 +93,12 @@ export const postEditBook = async (req, res) => {
 
 export const deleteBook = async (req, res) => {
   const { id } = req.params;
+  const book = await Book.findById(id).populate("owner");
+  const { loggedInUser } = req.session;
+  if (book.owner._id !== loggedInUser._id) {
+    req.flash("error", "You can't delete this book!");
+    return res.redirect(`/books/${id}`);
+  }
   try {
     await Book.findByIdAndDelete(id);
   } catch (error) {

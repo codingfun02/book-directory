@@ -20,10 +20,11 @@ nav
         a.nav__anchor(href="/")
           i(class="fas fa-book")
           h1.nav__title Book Directory
-      div.nav__line
-      li
-        a.nav__anchor(href="/books/add")
-          i(class="fas fa-plus-square")
+      if loggedIn
+        div.nav__line
+        li
+          a.nav__anchor(href="/add")
+            i(class="fas fa-plus-square")
       div.nav__line
       if loggedIn
         li

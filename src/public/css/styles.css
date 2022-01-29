@@ -127,6 +127,10 @@ main {
   margin-bottom: 0;
 }
 
+.main__book-list li .bold {
+  font-weight: bolder;
+}
+
 table.book__info {
   width: 70%;
   border: 1px solid #1e272e;

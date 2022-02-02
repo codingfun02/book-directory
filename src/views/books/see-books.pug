@@ -1,13 +1,9 @@
 extends ../layout/layout.pug
+include ../mixins/book-mixin
 
 block content
   ul.main__book-list
     each book in books
-      li
-        a(href=`/books/${book._id}`)
-          | #{book.title}
-        span  (Added By 
-          a(href="#").bold #{book.owner.username}
-          | )
+      +book(book)
     else
       li Can't find any books

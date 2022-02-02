@@ -80,3 +80,15 @@ export const logout = (req, res) => {
   req.flash("success", "Successfully Logged out");
   return res.redirect("/");
 };
+
+
+export const seeUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate({
+    path: "books",
+    populate: {
+      path: "owner"
+    }
+  });
+  return res.render("users/see-user.pug", { pageTitle: `${user.username}'s Profile`, user });
+};

@@ -1,0 +1,10 @@
+extends ../layout/layout.pug
+include ../mixins/book-mixin
+
+block content
+    h2 Books Owning
+    ul.main__book-list
+        each book in user.books
+            +book(book)
+        else
+            li This user owns no book

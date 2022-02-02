@@ -5,6 +5,7 @@ import MongoStore from "connect-mongo";
 import flash from "express-flash";
 import rootRouter from "./routers/rootRouter.js";
 import bookRouter from "./routers/bookRouter.js";
+import userRouter from "./routers/userRouter";
 import { localsMiddleware } from "./middlewares.js";
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(localsMiddleware);
 app.use("/static", express.static(__dirname + "/public"));
 app.use("/", rootRouter);
 app.use("/books", bookRouter);
+app.use("/users", userRouter);
 app.use((req, res, next) => {
   res.status(404).render("404", { pageTitle: "Page Not Found 404" });
 });

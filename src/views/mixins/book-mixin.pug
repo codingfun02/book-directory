@@ -1,0 +1,7 @@
+mixin book(book)
+    li
+        a(href=`/books/${book._id}`)
+          | #{book.title}
+        span  (Added By 
+          a(href=`/users/${book.owner._id}`).bold #{book.owner.username}
+          | )

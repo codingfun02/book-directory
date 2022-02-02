@@ -1,4 +1,5 @@
 import Book from "../models/Book.js";
+import User from "../models/User.js";
 
 export const seeBooks = async (req, res) => {
   const books = await Book.find({}).populate("owner");
@@ -43,6 +44,11 @@ export const postAddBook = async (req, res) => {
       author,
       genres: genres.split(","),
       owner: loggedInUser._id
+    });
+    await User.findByIdAndUpdate(loggedInUser._id, {
+      $push: {
+        books: book
+      }
     });
   } catch (error) {
     req

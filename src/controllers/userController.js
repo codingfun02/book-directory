@@ -2,19 +2,29 @@ import bcrypt from "bcrypt";
 import User from "../models/User";
 
 export const getJoin = (req, res) => {
+  const { loggedIn } = req.session;
+  if (loggedIn) {
+    req.flash("Please LOGIN to join!");
+    return res.status(401).redirect("/");
+  }
   return res.render("users/join", { pageTitle: "Join" });
 };
 
 export const postJoin = async (req, res) => {
   const { username, password, passwordConfirm } = req.body;
   const usernameExists = await User.exists({ username });
+  const { loggedIn } = req.session;
+  if (loggedIn) {
+    req.flash("Please LOGOUT to join!");
+    return res.status(401).redirect("/");
+  }
   if (usernameExists) {
     req.flash("error", "Username alreay exists");
-    return res.status(400).redirect("/join");
+    return res.status(409).redirect("/join");
   }
   if (password != passwordConfirm) {
     req.flash("error", "Confirm password doesn't match");
-    return res.status(400).redirect("/join");
+    return res.status(409).redirect("/join");
   }
   try {
     await User.create({
@@ -23,18 +33,28 @@ export const postJoin = async (req, res) => {
     });
   } catch (error) {
     req.flash("error", "Error occured while creating user: " + error._message);
-    return res.redirect("/login");
+    return res.status(500).redirect("/login");
   }
   res.redirect("/login");
 };
 
 export const getLogin = (req, res) => {
+  const { loggedIn } = req.session;
+  if (loggedIn) {
+    req.flash("Please LOGOUT to login!");
+    return res.status(401).redirect("/");
+  }
   return res.render("users/login", { pageTitle: "Login" });
 };
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
+  const { loggedIn } = req.session;
+  if (loggedIn) {
+    req.flash("Please LOGOUT to login!");
+    return res.status(401).redirect("/");
+  }
   if (!user) {
     req.flash("error", "Account doens't exist");
     return res.status(400).redirect("/login");
@@ -50,6 +70,11 @@ export const postLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
+  const { loggedIn } = req.session;
+  if (!loggedIn) {
+    req.flash("Please LOGIN to logout!");
+    return res.status(401).redirect("/");
+  }
   req.session.loggedIn = false;
   req.session.loggedInUser = {};
   req.flash("success", "Successfully Logged out");

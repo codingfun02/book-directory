@@ -21,12 +21,20 @@ export const seeBook = async (req, res) => {
 
 export const getAddBook = (req, res) => {
   const { loggedIn } = req.session;
+  if (!loggedIn) {
+    req.flash("error", "Please LOGIN to add books");
+    return res.status(401).redirect("login");
+  }
   return res.render("books/add.pug", { pageTitle: "Add a Book" });
 };
 
 export const postAddBook = async (req, res) => {
   const { title, description, author, genres } = req.body;
   const { loggedInUser } = req.session;
+  if (!loggedInUser) {
+    req.flash("error", "Please LOGIN to add books");
+    return res.status(401).redirect("login");
+  }
   let book;
   try {
     book = await Book.create({
@@ -38,7 +46,7 @@ export const postAddBook = async (req, res) => {
     });
   } catch (error) {
     req
-      .status(400)
+      .status(500)
       .flash("error", "Error occured while adding: " + error._message);
     return res.redirect("/");
   }
@@ -52,7 +60,7 @@ export const getEditBook = async (req, res) => {
   const { loggedInUser } = req.session;
   if (book.owner._id !== loggedInUser._id) {
     req.flash("error", "You can't edit this book!");
-    return res.redirect(`/books/${id}`);
+    return res.status(401).redirect(`/books/${id}`);
   }
   if (!book) {
     req.flash("error", "Can't find this book!");
@@ -71,7 +79,7 @@ export const postEditBook = async (req, res) => {
   const { loggedInUser } = req.session;
   if (book.owner._id !== loggedInUser._id) {
     req.flash("error", "You can't edit this book!");
-    return res.redirect(`/books/${id}`);
+    return res.status(401).redirect(`/books/${id}`);
   }
   try {
     const book = await Book.findByIdAndUpdate(id, {
@@ -83,7 +91,7 @@ export const postEditBook = async (req, res) => {
     await book.validate();
   } catch (error) {
     req
-      .status(400)
+      .status(500)
       .flash("error", "Error occured while editing" + error._message);
     return res.redirect(`/books/${id}`);
   }
@@ -97,13 +105,13 @@ export const deleteBook = async (req, res) => {
   const { loggedInUser } = req.session;
   if (book.owner._id !== loggedInUser._id) {
     req.flash("error", "You can't delete this book!");
-    return res.redirect(`/books/${id}`);
+    return res.status(401).redirect(`/books/${id}`);
   }
   try {
     await Book.findByIdAndDelete(id);
   } catch (error) {
     req.flash("error", "Error occured while deleting" + error._message);
-    return res.redirect("/");
+    return res.status(500).redirect("/");
   }
   req.flash("success", "Successfully Deleted");
   return res.redirect("/");

@@ -1,0 +1,6 @@
+extends ../layout/layout
+
+block content
+    form(method="POST")
+        input(type="text", placeholder="Username", value=loggedInUser.username, name="username", required)
+        input(type="submit", value="수정하기")

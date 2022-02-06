@@ -92,3 +92,27 @@ export const seeUser = async (req, res) => {
   });
   return res.render("users/see-user.pug", { pageTitle: `${user.username}'s Profile`, user });
 };
+
+export const getEditProfile = (req, res) => {
+  const { loggedIn } = req.session;
+  if (!loggedIn) {
+    req.flash("error", "Please LOGIN to edit profile");
+    return res.status(401).redirect("/login");
+  }
+  return res.render("users/edit-profile.pug", { pageTitle: "Edit Profile" })
+}
+
+export const postEditProfile = async (req, res) => {
+  const { loggedIn, loggedInUser: { _id : id } } = req.session;
+  const { username } = req.body;
+  if (!loggedIn) {
+    req.flash("error", "Please LOGIN to edit profile");
+    return res.status(401).redirect("/login");
+  }
+  const updatedUser = await User.findByIdAndUpdate(id, {
+    username
+  }, { new: true });
+  req.session.loggedInUser = updatedUser;
+  req.flash("success", "Successfully Edited User Profile");
+  return res.redirect(`/users/${id}`);
+}

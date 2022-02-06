@@ -28,6 +28,8 @@ nav
       div.nav__line
       if loggedIn
         li
+          a.nav__anchor.nav__user-btn(href="/edit-profile") Edit Profile
+        li
           a.nav__anchor.nav__user-btn(href="/logout") Log out
       else
         li

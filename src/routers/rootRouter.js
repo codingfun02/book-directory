@@ -6,6 +6,8 @@ import {
   getLogin,
   postLogin,
   logout,
+  getEditProfile,
+  postEditProfile
 } from "../controllers/userController";
 import {
   getAddBook,
@@ -24,5 +26,6 @@ rootRouter
   .post(postLogin);
 rootRouter.get("/logout", protectorMiddleware, logout);
 rootRouter.route("/add").all(protectorMiddleware).get(getAddBook).post(postAddBook);
+rootRouter.all(protectorMiddleware).route("/edit-profile").get(getEditProfile).post(postEditProfile);
 
 export default rootRouter;
